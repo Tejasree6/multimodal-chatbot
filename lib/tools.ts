@@ -10,10 +10,16 @@ export const getCurrentTime = {
   execute: async ({ timezone }: { timezone: string }) => {
     try {
       const now = new Date();
-      const options = { timeZone: timezone, hour: 'numeric', minute: 'numeric', second: 'numeric' };
-      const formatter = new Intl.DateTimeFormat('en-US', options as any);
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: timezone,
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      };
+      const formatter = new Intl.DateTimeFormat('en-US', options);
       return `The current time in ${timezone} is ${formatter.format(now)}.`;
-    } catch (error) {
+    } catch (err) {
+      void err; // use the variable so ESLint doesn't flag it as unused
       return 'Sorry, I could not find the time for that timezone.';
     }
   },
